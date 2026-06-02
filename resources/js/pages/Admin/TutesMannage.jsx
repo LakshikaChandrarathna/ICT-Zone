@@ -143,7 +143,7 @@ const TutesManage = () => {
           
           <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
             
-            {/* RESOURCE TYPE SELECTOR */}
+            
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-gray-600 block">Resource Type (සම්පත් වර්ගය)</label>
               <select
