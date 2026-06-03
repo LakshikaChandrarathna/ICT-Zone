@@ -8,6 +8,13 @@ import Papers from "./pages/Papers";
 import About from "./pages/About";
 import Quizzes from "./pages/Quizzes";
 import Grade6 from "./pages/Grade6";
+import Grade8 from "./pages/Grade8";
+import Grade9 from "./pages/Grade9";
+import Grade10 from "./pages/Grade10";
+import Grade7 from "./pages/Grade7";
+import Grade11 from "./pages/Grade11";
+import Grade12 from "./pages/Grade12";
+import Grade13 from "./pages/Grade13";
 
 // Admin කොටස්
 import AdminNav from "./components/AdminNav"; 
@@ -26,6 +33,13 @@ function App() {
                 <Route path="/quizzes" element={<Quizzes />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/grade6" element={<Grade6 />} />
+                <Route path="/grade7" element={<Grade7 />} />
+                <Route path="/grade8" element={<Grade8 />} />
+                <Route path="/grade9" element={<Grade9 />} />
+                <Route path="/grade10" element={<Grade10 />} />
+                <Route path="/grade11" element={<Grade11 />} />
+                <Route path="/grade12" element={<Grade12 />} />
+                <Route path="/grade13" element={<Grade13 />} />
 
                 
                 <Route path="/admin" element={<AdminNav />}>

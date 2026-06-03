@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-const TutesManage = () => {
+const TutesMannage = () => {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Laravel Backend API URL
   const API_URL = 'http://localhost:8000/api/tutes'; 
 
   const [formData, setFormData] = useState({
     title: '',
     grade: '11',
     lesson: '',
-    type: 'tute', // default: tute, වෙනත්: video, short_note
+    type: 'tute', 
     video_url: '',
     status: 'Active'
   });
@@ -26,7 +25,8 @@ const TutesManage = () => {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-      setResources(data);
+      // ලැබෙන දත්ත Array එකක්දැයි තහවුරු කර ගැනීම (නැතහොත් .map crash වේ)
+      setResources(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching data:", error);
       alert("පද්ධතියට සම්බන්ධ වීමේ දෝෂයකි!");
@@ -49,7 +49,6 @@ const TutesManage = () => {
     if (!formData.title.trim()) return alert('කරුණාකර මාතෘකාව (Title) ඇතුළත් කරන්න!');
     if (!formData.lesson.trim()) return alert('කරුණාකර පාඩමේ අංකය (Lesson No) ඇතුළත් කරන්න!');
     
-    // Resource Type එක අනුව සුදුසු පරිදි Validation සිදුවේ
     if (formData.type === 'video' && !formData.video_url.trim()) {
       return alert('කරුණාකර වීඩියෝවට අදාළ YouTube URL එක ඇතුළත් කරන්න!');
     }
@@ -90,7 +89,9 @@ const TutesManage = () => {
         alert('දත්ත සාර්ථකව පද්ධතියට එකතු කරන ලදී!');
       } else {
         console.error("Laravel Error:", resData);
-        alert(`දත්ත සුරැකීමේදී දෝෂයක් සිදු විය: ${resData.message || 'නැවත උත්සාහ කරන්න.'}`);
+        // Laravel Validation Errors පෙන්වීමට:
+        const errorMsg = resData.errors ? Object.values(resData.errors).flat().join('\n') : resData.message;
+        alert(`දත්ත සුරැකීමේදී දෝෂයක් සිදු විය:\n${errorMsg || 'නැවත උත්සාහ කරන්න.'}`);
       }
     } catch (error) {
       console.error("Error saving data:", error);
@@ -142,7 +143,6 @@ const TutesManage = () => {
           </h3>
           
           <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
-            
             
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-gray-600 block">Resource Type (සම්පත් වර්ගය)</label>
@@ -203,7 +203,7 @@ const TutesManage = () => {
               </div>
             </div>
 
-            {/* DYNAMIC FORM FIELDS BASED ON TYPE */}
+            {/* DYNAMIC FORM FIELDS */}
             {formData.type === 'video' ? (
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-gray-600 block">YouTube Video Embed URL</label>
@@ -287,7 +287,7 @@ const TutesManage = () => {
                       <td className="py-3.5 px-4 font-mono text-[#5d81bd] font-bold">#{res.lesson}</td>
                       <td className="py-3.5 px-4 font-sans text-gray-700 max-w-[200px] truncate group-hover:text-[#5d81bd] transition-colors">
                         {res.type === 'video' ? (
-                          <a href={res.video_url} target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5 text-blue-600">
+                          <a href={res.video_url || '#'} target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1.5 text-blue-600">
                             <span className="shrink-0">📺</span> {res.title}
                           </a>
                         ) : res.file_url ? (
@@ -303,7 +303,8 @@ const TutesManage = () => {
                           res.type === 'tute' ? 'bg-blue-50 text-blue-700' :
                           res.type === 'short_note' ? 'bg-amber-50 text-amber-700' : 'bg-purple-50 text-purple-700'
                         }`}>
-                          {res.type.replace('_', ' ')}
+                          {/* Safe check manually handling underscores */}
+                          {res.type ? res.type.replace('_', ' ') : 'N/A'}
                         </span>
                       </td>
                       <td className="py-3.5 px-4 font-mono text-gray-500">Grade {res.grade}</td>
@@ -311,7 +312,7 @@ const TutesManage = () => {
                         <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase ${
                           res.status === 'Active' ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'
                         }`}>
-                          {res.status}
+                          {res.status || 'Active'}
                         </span>
                       </td>
                       <td className="py-3.5 px-4 text-center">
@@ -337,4 +338,4 @@ const TutesManage = () => {
   );
 };
 
-export default TutesManage;
+export default TutesMannage;
