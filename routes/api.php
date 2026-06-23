@@ -8,15 +8,26 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\LearningResourceController;
 use App\Http\Controllers\Api\PaperController;
 use App\Http\Controllers\Api\TuteController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
 
 // ==========================================
-// 1. QUIZ ROUTES (නිවැරදි කරන ලදී)
+// 1. QUIZ ROUTES 
 // ==========================================
 Route::prefix('quizzes')->group(function () {
     Route::post('/', [QuizController::class, 'store']);                  // POST -> /api/quizzes
@@ -34,7 +45,7 @@ Route::prefix('learning-resources')->group(function () {
     Route::post('/', [LearningResourceController::class, 'store']); 
     Route::delete('/{id}', [LearningResourceController::class, 'destroy']); 
     
-    // 👈 මේ ලින්ක් එක අලුතින්ම එකතු කරන්න:
+   
     Route::get('/grade/{grade}', [LearningResourceController::class, 'getByGrade']); // GET -> /api/learning-resources/grade/6
 });
 

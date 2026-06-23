@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import Navbar from '@/Components/Navbar'; 
 
 const HomePage = () => {
@@ -7,48 +8,56 @@ const HomePage = () => {
       id: 6, 
       title: 'Grade 06 ICT', 
       items: '10 Modules', 
+      path: '/grade6', 
       desc: 'පරිගණකයේ මූලික කොටස්, මෙහෙයුම් පද්ධති හඳුනාගැනීම සහ සරල චිත්‍ර ඇඳීමේ මෘදුකාංග (Paint) මුල සිට සරලව.' 
     },
     { 
       id: 7, 
       title: 'Grade 07 ICT', 
       items: '12 Modules', 
+      path: '/grade7',
       desc: 'දත්ත සහ තොරතුරු, ලිපි ලේඛන සකස් කිරීම (Word Processing) සහ සරල Multimedia නිර්මාණකරණය.' 
     },
     { 
       id: 8, 
       title: 'Grade 08 ICT', 
       items: '14 Modules', 
+      path: '/grade8',
       desc: 'පැතුරුම්පත් (Spreadsheets), ඉලෙක්ට්‍රොනික ඉදිරිපත් කිරීම් (PowerPoint) සහ සරල Scratch ක්‍රමලේඛනය.' 
     },
     { 
       id: 9, 
       title: 'Grade 09 ICT', 
       items: '15 Modules', 
+      path: '/grade9',
       desc: 'පරිගණක ජාලකරණය, වෙබ් අඩවි නිර්මාණය (HTML මූලධර්ම) සහ තාර්කික ගැටලු විසඳීමේ මූලික පියවර.' 
     },
     { 
       id: 10, 
       title: 'Grade 10 (O/L)', 
       items: '22 Lessons', 
+      path: '/grade10',
       desc: 'සංඛ්‍යා පද්ධති (Number Systems), දත්ත සමුදාය (Database), සහ ප්‍රථම වරට Python Programming හැඳින්වීම.' 
     },
     { 
       id: 11, 
       title: 'Grade 11 (O/L)', 
       items: '25 Lessons', 
+      path: '/grade11',
       desc: 'පද්ධති සංවර්ධන ජීවන චක්‍රය (SDLC), Python Array, Functions සහ O/L විභාග ඉලක්ක කරගත් පසුගිය ප්‍රශ්න පත්‍ර.' 
     },
     { 
       id: 12, 
       title: 'Grade 12 (A/L)', 
       items: '30 Lessons', 
+      path: '/grade12',
       desc: 'Advanced Logic Gates, Boolean Algebra, දත්ත සන්නිවේදනය, ER Diagrams සහ උසස් SQL භාවිතය.' 
     },
     { 
       id: 13, 
       title: 'Grade 13 (A/L)', 
       items: '35 Lessons', 
+      path: '/grade13',
       desc: 'Advanced Python, Object-Oriented Programming (OOP), Web Engineering (PHP/CSS) සහ e-Commerce TAක්ෂණය.' 
     },
   ];
@@ -60,27 +69,27 @@ const HomePage = () => {
 
       {/* --- ASYMMETRIC PROFESSIONAL HERO SECTION --- */}
       <section className="relative bg-[#010813] py-24 md:py-32 px-6 md:px-12 w-full border-b border-[#071835]/40 overflow-hidden">
-        {/* Crisp grid blueprint overlay */}
         <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#5d81bd_1px,transparent_1px),linear-gradient(to_bottom,#5d81bd_1px,transparent_1px)] bg-[size:5rem_5rem]" />
-        
-        {/* Soft, ultra-premium background glow */}
         <div className="absolute top-1/3 right-0 w-[600px] h-[400px] bg-[#5d81bd]/10 rounded-full blur-[140px] -z-10" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
-          
-          {/* Left Column: Heading & Typography */}
           <div className="lg:col-span-7 text-left">
             <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded border border-[#5d81bd]/20 bg-[#071835]/40 text-[#b5cbf0] text-[11px] font-mono tracking-wide mb-6">
               <span className="h-1.5 w-1.5 rounded-full bg-[#5d81bd] animate-pulse" />
               system_portal: v2.0.26
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] mb-6">
-              Learn ICT Like a <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#b5cbf0] to-[#5d81bd] font-mono font-bold">
-                [Developer]
-              </span>
-            </h1>
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-6">
+  
+  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white from-20% via-[#5d81bd] via-35% to-[#dca443] to-65%">
+    Learn ICT Like a
+  </span>
+  
+  
+  <span className="block font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-white from-15% via-[#5d81bd] via-30% to-[#dca443] to-60%">
+    Developer
+  </span>
+</h1>
 
             <p className="text-sm md:text-base text-[#5d81bd] max-w-xl leading-relaxed mb-0 font-medium opacity-90">
               ශ්‍රී ලංකාවේ 6 සිට 13 ශ්‍රේණි සඳහාම විශේෂයෙන්ම ව්‍යුහගත කළ පද්ධතිය. 
@@ -88,7 +97,6 @@ const HomePage = () => {
             </p>
           </div>
 
-          {/* Right Column: Refined Command Box */}
           <div className="lg:col-span-5 w-full">
             <div className="bg-[#01060e] border border-[#071835] rounded-xl p-6 shadow-2xl relative">
               <div className="flex gap-1.5 mb-5 border-b border-[#071835]/60 pb-3.5">
@@ -116,11 +124,10 @@ const HomePage = () => {
               </button>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* --- 🛠️ මෙතැන් සිට පහළ කොටස ඔයාගේ මුල්ම වර්ණ රටාවලට අනුව නිවැරදි කර ඇත --- */}
+      {/* --- SYLLABUS SECTION --- */}
       <section className="px-6 md:px-12 py-10 max-w-7xl mx-auto bg-white">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#b5cbf0]/30 pb-6 mb-12">
@@ -133,15 +140,13 @@ const HomePage = () => {
           </p>
         </div>
 
-        {/* Clean Line Grid Layout - මුල්ම Background Colors ඒ විදිහටම ආරක්ෂා කර ඇත */}
+        {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat, idx) => (
-            <div
+            
+            <Link
               key={cat.id}
-              onClick={() => {
-                console.log(`Navigating to Index ${cat.id}`);
-                alert(`Grade ${cat.id} වෙත ප්‍රවේශ වෙමින්...`);
-              }}
+              to={cat.path} 
               className="group relative p-6 rounded-xl bg-gradient-to-b from-[#b5cbf0]/10 to-[#5d81bd]/05 border border-[#b5cbf0]/30 hover:bg-none hover:bg-[#010813] hover:border-[#071835] hover:shadow-[0_24px_50px_rgba(1,8,19,0.12)] transition-all duration-300 cursor-pointer flex flex-col justify-between"
             >
               <div>
@@ -150,13 +155,14 @@ const HomePage = () => {
                   <span className="font-mono text-xs text-[#5d81bd] group-hover:text-[#b5cbf0]/50 font-bold transition-colors">
                     INDEX_0{idx + 1}
                   </span>
-                  <span className="text-[10px] font-mono font-bold bg-[#071835] text-[#b5cbf0] group-hover:bg-[#5d81bd] group-hover:text-[#01060e] px-2 py-0.5 rounded transition-colors">
+                  <span className="text-[10px] font-mono font-bold bg-[#071835] text-[#b5cbf0] group-hover:bg-[#dca443] group-hover:text-[#01060e] px-2 py-0.5 rounded transition-colors">
                     {cat.items}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base font-extrabold text-[#071835] tracking-tight mb-3 group-hover:text-white transition-colors">
+                
+                <h3 className="text-base font-extrabold text-[#071835] tracking-tight mb-3 group-hover:text-[#dca443] transition-colors">
                   {cat.title}
                 </h3>
 
@@ -171,12 +177,12 @@ const HomePage = () => {
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#071835]/70 group-hover:text-[#5d81bd] transition-colors">
                   launch_module
                 </span>
-                <span className="text-[#5d81bd] group-hover:translate-x-1 transition-transform text-sm font-mono font-bold">
+                
+                <span className="text-[#5d81bd] group-hover:text-[#dca443] group-hover:translate-x-1 transition-all text-sm font-mono font-bold">
                   →
                 </span>
               </div>
-
-            </div>
+            </Link>
           ))}
         </div>
       </section>

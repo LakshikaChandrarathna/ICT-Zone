@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios'; 
+import Navbar from '@/Components/Navbar'; 
 
 const Quizzes = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -128,6 +129,7 @@ const Quizzes = () => {
 
     return (
         <div className="min-h-screen bg-white font-sans text-[#071835]">
+            <Navbar />
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <h1 className="text-3xl font-black mb-8">ICT ZONE <span className="text-blue-600">[QUIZZES]</span></h1>
                 
