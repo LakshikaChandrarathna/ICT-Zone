@@ -14,7 +14,7 @@ const Quizzes = () => {
     const [answers, setAnswers] = useState({});
     const [showResult, setShowResult] = useState(false);
 
-    // Backend එකෙ
+    // Backend එකෙන් ලැබෙන Data
     const [quizResultData, setQuizResultData] = useState(null);
 
     useEffect(() => {
@@ -42,13 +42,11 @@ const Quizzes = () => {
         setAnswers({ ...answers, [currentStep]: optionIndex });
     };
 
-    
     const nextQuestion = async () => {
         if (currentStep < activeQuiz.questions.length - 1) {
             setCurrentStep(currentStep + 1);
         } else {
             try {
-                
                 const response = await axios.post(`http://127.0.0.1:8000/api/quizzes/${activeQuiz.id}/submit`, {
                     studentAnswers: answers
                 });
@@ -62,66 +60,182 @@ const Quizzes = () => {
         }
     };
 
+    // --- COMPACT & MODERN QUIZ PLAYER UI ---
     if (activeQuiz && !showResult) {
-        // --- QUIZ PLAYER UI ---
         const q = activeQuiz.questions[currentStep];
+        const progressPercentage = ((currentStep + 1) / activeQuiz.questions.length) * 100;
+
         return (
-            <div className="min-h-screen bg-gray-50 p-8 flex justify-center items-center">
-                <div className="max-w-2xl w-full bg-white p-8 rounded-3xl shadow-xl border">
-                    <div className="flex justify-between items-center mb-6">
-                        <span className="text-xs font-mono font-bold text-blue-600">QUESTION {currentStep + 1} / {activeQuiz.questions.length}</span>
-                        <button onClick={() => setActiveQuiz(null)} className="text-xs text-gray-400">Exit</button>
-                    </div>
-                    <h2 className="text-xl font-bold mb-8">{q.qText}</h2>
-                    <div className="space-y-3">
-                        {q.options.map((opt, i) => (
-                            <button key={i} 
-                                onClick={() => handleAnswer(i)}
-                                className={`w-full p-4 text-left rounded-2xl border-2 transition-all ${answers[currentStep] === i ? 'border-blue-600 bg-blue-50' : 'border-gray-100 hover:border-blue-200'}`}
+            <div className="min-h-screen bg-slate-50 py-6 px-4 flex justify-center items-center font-sans antialiased">
+                <div className="max-w-xl w-full bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden flex flex-col justify-between transition-all">
+                    
+                    {/* Header with Progress Bar */}
+                    <div>
+                        <div className="p-5 flex justify-between items-center bg-slate-50/50 border-b border-slate-100">
+                            <div>
+                                <span className="text-[10px] font-bold tracking-wider text-blue-600 uppercase block mb-0.5">Progress</span>
+                                <div className="text-base font-black text-slate-800">
+                                    Question {currentStep + 1} <span className="text-xs font-medium text-slate-400">/ {activeQuiz.questions.length}</span>
+                                </div>
+                            </div>
+                            <button 
+                                onClick={() => setActiveQuiz(null)} 
+                                className="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-red-500 bg-white hover:bg-red-50 border border-slate-200 rounded-lg shadow-sm transition-all"
                             >
-                                {opt}
+                                Quit
                             </button>
-                        ))}
+                        </div>
+                        
+                        {/* Progress Bar */}
+                        <div className="w-full h-1 bg-slate-100">
+                            <div 
+                                className="h-full bg-blue-600 transition-all duration-300 ease-out" 
+                                style={{ width: `${progressPercentage}%` }}
+                            ></div>
+                        </div>
                     </div>
-                    <button onClick={nextQuestion} disabled={answers[currentStep] === undefined} className="w-full mt-8 p-4 bg-black text-white rounded-2xl font-bold disabled:opacity-50">
-                        {currentStep === activeQuiz.questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
-                    </button>
+
+                    {/* Question and Options Body */}
+                    <div className="p-6 flex-1">
+                        <h2 className="text-lg font-bold text-slate-800 mb-5 leading-snug">
+                            {q.qText}
+                        </h2>
+                        
+                        <div className="space-y-2.5">
+                            {q.options.map((opt, i) => {
+                                const isSelected = answers[currentStep] === i;
+                                return (
+                                    <button 
+                                        key={i} 
+                                        onClick={() => handleAnswer(i)}
+                                        className={`w-full p-3.5 text-left rounded-xl border-2 text-sm font-semibold text-slate-700 transition-all duration-150 flex items-center justify-between group ${
+                                            isSelected 
+                                            ? 'border-blue-600 bg-blue-50/50 text-blue-900 shadow-sm' 
+                                            : 'border-slate-100 hover:border-blue-200 hover:bg-slate-50/50'
+                                        }`}
+                                    >
+                                        <span className="flex items-center gap-3">
+                                            <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs transition-all ${
+                                                isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600'
+                                            }`}>
+                                                {String.fromCharCode(65 + i)}
+                                            </span>
+                                            <span className="text-slate-700 font-medium">{opt}</span>
+                                        </span>
+                                        
+                                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${
+                                            isSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300'
+                                        }`}>
+                                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Footer Actions */}
+                    <div className="p-4 bg-slate-50/50 border-t border-slate-100">
+                        <button 
+                            onClick={nextQuestion} 
+                            disabled={answers[currentStep] === undefined} 
+                            className="w-full p-3 bg-black text-white rounded-xl font-bold text-sm shadow-md hover:opacity-90 active:scale-[0.99] transition-all disabled:opacity-30 disabled:pointer-events-none"
+                        >
+                            {currentStep === activeQuiz.questions.length - 1 ? 'Finish & Submit' : 'Next Question'}
+                        </button>
+                    </div>
                 </div>
             </div>
         );
     }
 
+    // --- COMPACT & WELL-STRUCTURED RESULT PANEL UI ---
     if (showResult && quizResultData) {
-        // --- RESULT PANEL ---
-       
         return (
-            <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center justify-center">
-                <div className="max-w-md w-full bg-white p-10 rounded-3xl shadow-xl text-center mb-6">
-                    <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-black">
-                        {quizResultData.percentage}%
-                    </div>
-                    <h2 className="text-2xl font-black mb-2">QUIZ COMPLETED!</h2>
-                    <p className="text-gray-500 mb-6">You scored {quizResultData.score} out of {quizResultData.totalQuestions}</p>
-                    <button onClick={() => setActiveQuiz(null)} className="w-full p-4 bg-blue-600 text-white rounded-2xl font-bold">Back to Quizzes</button>
-                </div>
-
-                
-                <div className="max-w-md w-full bg-white p-6 rounded-3xl shadow-lg border space-y-4">
-                    <h3 className="font-bold border-b pb-2 text-sm">Answers Review</h3>
-                    {quizResultData.review.map((item, index) => (
-                        <div key={index} className="p-3 border rounded-xl text-sm">
-                            <p className="font-semibold mb-2">{index + 1}. {item.question}</p>
-                            <p className={`text-xs p-2 rounded mb-1 ${item.isCorrect ? 'bg-green-50 text-green-700 font-medium' : 'bg-red-50 text-red-700 font-medium'}`}>
-                                Your Answer: {item.studentAnswer !== null ? item.options[item.studentAnswer] : 'Not Answered'} 
-                                {item.isCorrect ? ' (Correct)' : ' (Wrong)'}
+            <div className="min-h-screen bg-slate-50 py-8 px-4 flex flex-col items-center justify-center font-sans antialiased">
+                <div className="max-w-xl w-full grid grid-cols-1 gap-6">
+                    
+                    {/* Compact Score Card */}
+                    <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center justify-between relative overflow-hidden">
+                        <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-blue-600"></div>
+                        
+                        <div className="pl-2 text-left">
+                            <span className="px-2.5 py-0.5 bg-blue-50 text-blue-600 font-bold text-[10px] tracking-wider uppercase rounded-md inline-block mb-1">
+                                Quiz Completed
+                            </span>
+                            <h2 className="text-xl font-black text-slate-800 tracking-tight">Your Performance</h2>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Correct: <span className="text-slate-800 font-bold">{quizResultData.score}</span> / {quizResultData.totalQuestions} Questions
                             </p>
-                            {!item.isCorrect && (
-                                <p className="text-xs p-2 bg-gray-50 text-gray-700 rounded">
-                                    Correct Answer: <span className="font-medium text-green-600">{item.options[item.correctAnswer]}</span>
-                                </p>
-                            )}
                         </div>
-                    ))}
+                        
+                        {/* Mini Compact Score Meter */}
+                        <div className="w-20 h-20 bg-slate-50 border-2 border-slate-100 rounded-full flex flex-col items-center justify-center shadow-inner relative">
+                            <span className="text-lg font-black text-slate-800">{quizResultData.percentage}%</span>
+                            <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Score</span>
+                        </div>
+                    </div>
+
+                    {/* Answers Review Section */}
+                    <div className="bg-white p-5 rounded-2xl shadow-xl border border-slate-100">
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <h3 className="font-bold text-slate-800 text-sm">Answers Review</h3>
+                            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+                                Report
+                            </span>
+                        </div>
+
+                        <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1 scrollbar-thin">
+                            {quizResultData.review.map((item, index) => (
+                                <div key={index} className="p-3 border border-slate-100 rounded-xl bg-slate-50/30 flex flex-col gap-2">
+                                    <div className="flex items-start gap-2.5">
+                                        <span className="min-w-[20px] h-5 bg-slate-200 text-slate-700 font-bold rounded flex items-center justify-center text-[11px] mt-0.5">
+                                            {index + 1}
+                                        </span>
+                                        <p className="font-bold text-slate-800 text-sm leading-tight">{item.question}</p>
+                                    </div>
+                                    
+                                    <div className="grid gap-1.5 pl-8">
+                                        {/* Student's Answer Box */}
+                                        <div className={`p-2 rounded-lg border flex items-center justify-between text-[11px] font-semibold ${
+                                            item.isCorrect 
+                                            ? 'bg-green-50/40 border-green-100 text-green-800' 
+                                            : 'bg-red-50/40 border-red-100 text-red-800'
+                                        }`}>
+                                            <div>
+                                                <span className="opacity-70 font-medium">Your Ans: </span>
+                                                <span>{item.studentAnswer !== null ? item.options[item.studentAnswer] : 'Not Answered'}</span>
+                                            </div>
+                                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${
+                                                item.isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                            }`}>
+                                                {item.isCorrect ? '✓' : '✗'}
+                                            </span>
+                                        </div>
+                                        
+                                        {/* Correct Answer Box */}
+                                        {!item.isCorrect && (
+                                            <div className="p-2 bg-blue-50/20 border border-blue-100/30 rounded-lg text-[11px] font-semibold text-slate-600">
+                                                <span className="text-blue-600 opacity-90 font-medium">Correct Ans: </span>
+                                                <span className="text-slate-800 font-bold">{item.options[item.correctAnswer]}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Action Button Inside Panel */}
+                        <div className="mt-5 pt-3 border-t border-slate-100">
+                            <button 
+                                onClick={() => setActiveQuiz(null)} 
+                                className="w-full p-3 bg-blue-600 text-white rounded-xl font-bold text-sm shadow-md hover:bg-blue-700 transition-all active:scale-[0.99]"
+                            >
+                                Back to Quizzes
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         );
