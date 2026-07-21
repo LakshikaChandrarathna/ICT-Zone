@@ -68,28 +68,35 @@ const HomePage = () => {
       <Navbar />
 
       {/* --- ASYMMETRIC PROFESSIONAL HERO SECTION --- */}
-      <section className="relative bg-[#010813] py-24 md:py-32 px-6 md:px-12 w-full border-b border-[#071835]/40 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#5d81bd_1px,transparent_1px),linear-gradient(to_bottom,#5d81bd_1px,transparent_1px)] bg-[size:5rem_5rem]" />
+      <section className="relative isolate bg-[#010813] py-24 md:py-32 px-6 md:px-12 w-full border-b border-[#071835]/40 overflow-hidden">
+        {/* 1. Background Image Layer (Opacity එක 85% දක්වා වැඩි කළා) */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85 -z-20" 
+          style={{ backgroundImage: "url('/src/images/backgroundimage.png')" }}
+        />
+
+        {/* 2. Light Gradient Overlay (Darkness එක ඉතාම අඩුවෙන් තැබුවා) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#010813]/30 via-[#010813]/20 to-[#010813]/60 -z-10" />
+
+        {/* Existing Grid & Glow Effects */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#5d81bd_1px,transparent_1px),linear-gradient(to_bottom,#5d81bd_1px,transparent_1px)] bg-[size:5rem_5rem] -z-10" />
         <div className="absolute top-1/3 right-0 w-[600px] h-[400px] bg-[#5d81bd]/10 rounded-full blur-[140px] -z-10" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
           <div className="lg:col-span-7 text-left">
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded border border-[#5d81bd]/20 bg-[#071835]/40 text-[#b5cbf0] text-[11px] font-mono tracking-wide mb-6">
+            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded border border-[#5d81bd]/20 bg-[#071835]/40 text-[#b5cbf0] text-[11px] font-mono tracking-wide mb-6 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-[#5d81bd] animate-pulse" />
               system_portal: v2.0.26
             </div>
 
-<h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-6">
-  
-  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white from-20% via-[#5d81bd] via-35% to-[#dca443] to-65%">
-    Learn ICT Like a
-  </span>
-  
-  
-  <span className="block font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-white from-15% via-[#5d81bd] via-30% to-[#dca443] to-60%">
-    Developer
-  </span>
-</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-6">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white from-20% via-[#5d81bd] via-35% to-[#dca443] to-65%">
+                Learn ICT Like a
+              </span>
+              <span className="block font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-white from-15% via-[#5d81bd] via-30% to-[#dca443] to-60%">
+                Developer
+              </span>
+            </h1>
 
             <p className="text-sm md:text-base text-[#5d81bd] max-w-xl leading-relaxed mb-0 font-medium opacity-90">
               ශ්‍රී ලංකාවේ 6 සිට 13 ශ්‍රේණි සඳහාම විශේෂයෙන්ම ව්‍යුහගත කළ පද්ධතිය. 
@@ -98,21 +105,23 @@ const HomePage = () => {
           </div>
 
           <div className="lg:col-span-5 w-full">
-            <div className="bg-[#01060e] border border-[#071835] rounded-xl p-6 shadow-2xl relative">
+            <div className="bg-[#01060e]/90 backdrop-blur-md border border-[#071835] rounded-xl p-6 shadow-2xl relative">
               <div className="flex gap-1.5 mb-5 border-b border-[#071835]/60 pb-3.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#071835]" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#071835]" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#071835]" />
               </div>
-              
-              <span className="block text-[#5d81bd] font-mono text-[11px] uppercase tracking-wider mb-2.5">core_search_engine</span>
+
+              <span className="block text-[#5d81bd] font-mono text-[11px] uppercase tracking-wider mb-2.5">
+                core_search_engine
+              </span>
               <div className="relative group mb-4">
                 <input
                   type="text"
                   placeholder="පාඩම්, වීඩියෝ හෝ ප්‍රශ්න පත්‍ර (e.g., Python)..."
-                  className="w-full pl-4 pr-12 py-3.5 rounded-lg border border-[#071835] bg-[#010813] text-[#b5cbf0] placeholder-[#5d81bd]/30 focus:outline-none focus:border-[#5d81bd]/80 transition-all text-xs font-mono"
+                  className="w-full pl-4 pr-12 py-3.5 rounded-lg border border-[#071835] bg-[#010813]/80 text-[#b5cbf0] placeholder-[#5d81bd]/40 focus:outline-none focus:border-[#5d81bd]/80 transition-all text-xs font-mono"
                 />
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#5d81bd]/30 group-focus-within:text-[#b5cbf0]">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#5d81bd]/40 group-focus-within:text-[#b5cbf0]">
                   <svg fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                   </svg>
@@ -161,7 +170,6 @@ const HomePage = () => {
                 </div>
 
                 {/* Title */}
-                
                 <h3 className="text-base font-extrabold text-[#071835] tracking-tight mb-3 group-hover:text-[#dca443] transition-colors">
                   {cat.title}
                 </h3>
