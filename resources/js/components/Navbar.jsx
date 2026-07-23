@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext'; 
@@ -18,6 +18,22 @@ const Navbar = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Scroll State for Navbar background transition
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleLoginChange = (e) => setLoginData({ ...loginData, [e.target.name]: e.target.value });
   const handleRegisterChange = (e) => setRegisterData({ ...registerData, [e.target.name]: e.target.value });
 
@@ -29,7 +45,6 @@ const Navbar = () => {
     try {
       const res = await axios.post('/api/login', loginData);
       
-     
       login(res.data.user, res.data.access_token); 
       
       setShowLogin(false);
@@ -48,7 +63,6 @@ const Navbar = () => {
     try {
       const res = await axios.post('/api/register', registerData);
       
-    
       login(res.data.user, res.data.access_token); 
       
       setShowRegister(false);
@@ -76,19 +90,23 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between px-6 md:px-16 py-3.5 bg-[#0a0f1d] border-b border-[#5d81bd]/10 sticky top-0 z-50 w-full">
+      <nav 
+        className={`flex items-center justify-between px-6 md:px-16 py-1 sticky top-0 z-50 w-full transition-all duration-300 ${
+          isScrolled 
+            ? 'bg-[#01060e]/75 backdrop-blur-md border-b border-[#071835]/80 shadow-lg' 
+            : 'bg-[#010813]/40 backdrop-blur-md border-b border-[#071835]/30'
+        }`}
+      >
         {/* --- LOGO --- */}
-
-
-<div className="flex items-center"> 
-  <Link to="/" className="flex items-center group pl-0"> 
-    <img 
-      src="/src/images/logo.png"
-      alt="ICTZone Logo" 
-      className="-ml-3 h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-    />
-  </Link>
-</div>
+        <div className="flex items-center"> 
+          <Link to="/" className="flex items-center group pl-0"> 
+            <img 
+              src="/src/images/logo.png"
+              alt="ICTZone Logo" 
+              className="-ml-3 h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </Link>
+        </div>
 
         {/* --- NAVIGATION LINKS --- */}
         <div className="hidden lg:flex items-center space-x-8 font-mono text-[11px] uppercase tracking-widest text-[#b5cbf0]/80">
@@ -112,7 +130,6 @@ const Navbar = () => {
         {/* --- ACTIONS / REAL-TIME USER PROFILE --- */}
         <div className="flex items-center gap-6">
           {user ? (
-    
             <div className="relative flex flex-col items-center">
               <button 
                 onClick={() => setShowDropdown(!showDropdown)}

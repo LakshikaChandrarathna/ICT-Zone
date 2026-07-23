@@ -68,15 +68,15 @@ const HomePage = () => {
       <Navbar />
 
       {/* --- ASYMMETRIC PROFESSIONAL HERO SECTION --- */}
-      <section className="relative isolate bg-[#010813] py-24 md:py-32 px-6 md:px-12 w-full border-b border-[#071835]/40 overflow-hidden">
-        {/* 1. Background Image Layer (Opacity එක 85% දක්වා වැඩි කළා) */}
+      <section className="relative isolate bg-[#010813] -mt-[64px] pt-44 pb-36 md:-mt-[72px] md:pt-56 md:pb-48 min-h-[85vh] flex items-center px-6 md:px-12 w-full border-b border-[#071835]/40 overflow-hidden">
+        {/* 1. Background Image Layer */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85 -z-20" 
           style={{ backgroundImage: "url('/src/images/backgroundimage.png')" }}
         />
 
-        {/* 2. Light Gradient Overlay (Darkness එක ඉතාම අඩුවෙන් තැබුවා) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#010813]/30 via-[#010813]/20 to-[#010813]/60 -z-10" />
+        {/* 2. Light Gradient Overlay (රූපයේ අඳුරු ගතිය වැඩි කිරීමට මෙහි opacity වැඩි කරන ලදී) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#010813]/60 via-[#010813]/50 to-[#010813]/60 -z-10" />
 
         {/* Existing Grid & Glow Effects */}
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#5d81bd_1px,transparent_1px),linear-gradient(to_bottom,#5d81bd_1px,transparent_1px)] bg-[size:5rem_5rem] -z-10" />
@@ -101,7 +101,7 @@ const HomePage = () => {
             <p className="text-sm md:text-base text-[#5d81bd] max-w-xl leading-relaxed mb-0 font-medium opacity-90">
               ශ්‍රී ලංකාවේ 6 සිට 13 ශ්‍රේණි සඳහාම විශේෂයෙන්ම ව්‍යුහගත කළ පද්ධතිය. 
               තාක්ෂණික ලෝකය ජයගන්න ඔයාගේ නිවැරදිම පියවර මෙතනින් තෝරන්න.
-            </p>
+            </    p>
           </div>
 
           <div className="lg:col-span-5 w-full">
@@ -137,11 +137,10 @@ const HomePage = () => {
       </section>
 
       {/* --- SYLLABUS SECTION --- */}
-      <section className="px-6 md:px-12 py-10 max-w-7xl mx-auto bg-white">
+      <section className="px-6 md:px-12 py-2 max-w-7xl mx-auto bg-white">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#b5cbf0]/30 pb-6 mb-12">
           <div>
-            <span className="text-[#5d81bd] font-mono text-xs tracking-widest uppercase block mb-1.5">// Syllabus Structure</span>
             <h2 className="text-3xl font-black text-[#071835] tracking-tight">ශ්‍රේණි අනුව නාමාවලිය</h2>
           </div>
           <p className="text-[11px] font-mono text-[#5d81bd] mt-2 md:mt-0 bg-[#b5cbf0]/10 px-2.5 py-1 rounded">
